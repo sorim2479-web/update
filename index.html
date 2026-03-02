@@ -7,80 +7,114 @@
 
 <style>
 body {
-    font-family: Arial, sans-serif;
-    background: #e8f5e9;
+    margin: 0;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(180deg, #f7fbf8 0%, #e7f4ea 100%);
     display: flex;
     justify-content: center;
-    padding: 20px;
+    padding: 32px 15px;
 }
 
 .container {
-    background: #f1faf3;
-    padding: 20px;
-    border-radius: 14px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    background: #ffffff;
+    padding: 26px;
+    border-radius: 20px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
     max-width: 420px;
     width: 100%;
 }
 
 h1 {
     text-align: center;
-    color: #2e7d32;
+    font-size: 22px;
+    color: #2f7d46;
+    letter-spacing: 0.4px;
     cursor: pointer;
 }
 
+h2 {
+    text-align: center;
+    font-size: 18px;
+    color: #3b8f56;
+    margin-top: 6px;
+}
+
+.description {
+    text-align: center;
+    color: #4b6b52;
+    font-size: 14px;
+    line-height: 1.7;
+    margin-top: 14px;
+}
+
 label {
-    font-weight: bold;
+    font-weight: 600;
     display: block;
-    margin-top: 12px;
-    color: #2e7d32;
+    margin-top: 18px;
+    color: #2f7d46;
+    font-size: 14px;
 }
 
 input, textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin-top: 6px;
-    border-radius: 6px;
-    border: 1px solid #b2dfbd;
+    border-radius: 10px;
+    border: 1px solid #d7e9dd;
     font-size: 14px;
+    background: #f9fcfa;
+    box-sizing: border-box;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border: 1px solid #7fcf9a;
     background: #fff;
 }
 
 button {
-    margin-top: 15px;
+    margin-top: 20px;
     width: 100%;
-    padding: 12px;
-    background: #66bb6a;
+    padding: 14px;
+    background: linear-gradient(90deg, #7adf94 0%, #4bbf72 100%);
     color: white;
     border: none;
-    border-radius: 6px;
-    font-size: 16px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
+    transition: transform 0.1s ease, opacity 0.2s;
 }
 
 button:hover {
-    background: #4caf50;
+    opacity: 0.95;
+}
+
+button:active {
+    transform: scale(0.98);
 }
 
 #message {
-    margin-top: 15px;
+    margin-top: 16px;
     text-align: center;
-    color: #2e7d32;
+    color: #2f7d46;
+    font-size: 14px;
 }
 
-/* 관리자 조회 영역 */
+/* 관리자 영역 */
 #adminArea {
-    margin-top: 20px;
+    margin-top: 22px;
     display: none;
-    background: white;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #b2dfbd;
+    background: #f8fbf9;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #d8ede0;
 }
 
 #adminArea h3 {
     margin-top: 0;
-    color: #2e7d32;
+    color: #2f7d46;
+    font-size: 15px;
 }
 </style>
 </head>
@@ -89,32 +123,36 @@ button:hover {
 
 <div class="container">
     <h1 id="title">Sorim Acupuncture & Healing Art Ltd</h1>
-    <h2 style="text-align:center;color:#2e7d32;">경과 업데이트</h2>
+    <h2>경과 업데이트 / Progress Update</h2>
 
-    <p style="text-align:center; color:#2e7d32;">
+    <p class="description">
         안녕하세요 😊<br>
         지난 치료 이후 변화가 있으셨다면 편하게 적어주세요.<br>
-        초진이신 경우, 오늘 진료받고 싶으신 내용을 적어주시면 됩니다.
+        초진이신 경우, 오늘 진료받고 싶으신 내용을 적어주시면 됩니다.<br><br>
+
+        Hello 😊<br>
+        If there are any changes after your last treatment, please feel free to write them.<br>
+        If this is your first visit, please write what treatment you would like today.
     </p>
 
-    <label>성함</label>
-    <input type="text" id="name" placeholder="예: 김소림">
+    <label>성함 / Name</label>
+    <input type="text" id="name" placeholder="예: Sorim">
 
-    <label>지난 치료 이후 경과</label>
-    <textarea id="progress" rows="3" placeholder="예: 왼쪽 어깨 통증이 50% 정도 호전되었습니다."></textarea>
+    <label>지난 치료 이후 경과 / Progress</label>
+    <textarea id="progress" rows="3" placeholder="예: 왼쪽 어깨 통증 50% 호전 / 50% improvement in left shoulder pain"></textarea>
 
-    <label>초진인 경우 원하는 진료 내용</label>
-    <textarea id="firstVisit" rows="3" placeholder="예: 어깨 통증 치료를 원합니다. / 두통이 자주 있습니다."></textarea>
+    <label>초진 진료 요청 / First visit request</label>
+    <textarea id="firstVisit" rows="3" placeholder="예: 어깨 통증 치료 / treatment for shoulder pain"></textarea>
 
-    <button onclick="submitForm()">경과 제출</button>
+    <button onclick="submitForm()">경과 제출 / Submit</button>
 
     <p id="message"></p>
 
-    <!-- 관리자 조회 영역 (비밀) -->
+    <!-- 관리자 영역 -->
     <div id="adminArea">
-        <h3>경과 기록</h3>
+        <h3>경과 기록 / Records</h3>
         <div id="logContent"></div>
-        <button onclick="clearLogs()" style="background:#e53935;">기록 삭제</button>
+        <button onclick="clearLogs()" style="background:#e53935;">기록 삭제 / Delete All</button>
     </div>
 </div>
 
@@ -122,69 +160,69 @@ button:hover {
 let clickCount = 0;
 const ADMIN_PASSWORD = "hailey2026!";
 
-// 제목 5번 클릭 → 관리자 조회 활성화
+// 제목 5회 클릭 → 관리자 영역
 document.getElementById("title").addEventListener("click", function() {
     clickCount++;
     if (clickCount >= 5) {
-        const pass = prompt("관리자 비밀번호를 입력하세요");
+        const pass = prompt("관리자 비밀번호 / Admin password");
         if (pass === ADMIN_PASSWORD) {
             document.getElementById("adminArea").style.display = "block";
             loadLogs();
         } else {
-            alert("비밀번호가 틀렸습니다.");
+            alert("비밀번호가 틀렸습니다. / Incorrect password");
         }
         clickCount = 0;
     }
 });
 
-// 경과 제출
+// 제출
 function submitForm() {
     const name = document.getElementById("name").value.trim();
     const progress = document.getElementById("progress").value.trim();
     const firstVisit = document.getElementById("firstVisit").value.trim();
 
     if (!name) {
-        alert("성함을 입력해주세요.");
+        alert("성함을 입력해주세요. / Please enter your name.");
         return;
     }
 
     if (!progress && !firstVisit) {
-        alert("경과 내용 또는 원하는 진료 내용을 하나 이상 작성해주세요.");
+        alert("경과 또는 요청 내용을 입력해주세요. / Please write progress or request.");
         return;
     }
 
     const data = {
-        name: name,
-        progress: progress,
-        firstVisit: firstVisit,
+        name,
+        progress,
+        firstVisit,
         time: new Date().toLocaleString()
     };
 
-    // localStorage 저장
     let logs = localStorage.getItem("progressLogs") || "";
     logs += `<p><strong>${data.time}</strong><br>
             이름: ${data.name}<br>
             경과: ${data.progress || "해당 없음"}<br>
-            희망 진료: ${data.firstVisit || "해당 없음"}</p><hr>`;
+            요청: ${data.firstVisit || "해당 없음"}</p><hr>`;
     localStorage.setItem("progressLogs", logs);
 
-    document.getElementById("message").innerText = "경과가 제출되었습니다 💚 감사합니다!";
+    document.getElementById("message").innerText =
+        "경과가 제출되었습니다 💚 감사합니다! / Progress submitted.";
     document.getElementById("name").value = "";
     document.getElementById("progress").value = "";
     document.getElementById("firstVisit").value = "";
 }
 
-// 관리자 조회
+// 조회
 function loadLogs() {
     const saved = localStorage.getItem("progressLogs");
-    document.getElementById("logContent").innerHTML = saved || "<p>기록 없음</p>";
+    document.getElementById("logContent").innerHTML = saved || "<p>기록 없음 / No records</p>";
 }
 
-// 기록 삭제
+// 삭제
 function clearLogs() {
-    if (confirm("정말 모든 기록을 삭제하시겠습니까?")) {
+    if (confirm("정말 삭제하시겠습니까? / Delete all records?")) {
         localStorage.removeItem("progressLogs");
-        document.getElementById("logContent").innerHTML = "<p>기록 삭제됨</p>";
+        document.getElementById("logContent").innerHTML = "<p>기록 삭제됨 / Deleted</p>";
     }
 }
 </script>
