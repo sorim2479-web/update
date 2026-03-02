@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>경과 업데이트</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #e8f5e9;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    background: #f1faf3;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    max-width: 420px;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    color: #2e7d32;
+    cursor: pointer;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 12px;
+    color: #2e7d32;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: 1px solid #b2dfbd;
+    font-size: 14px;
+    background: #fff;
+}
+
+button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    background: #66bb6a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #4caf50;
+}
+
+#message {
+    margin-top: 15px;
+    text-align: center;
+    color: #2e7d32;
+}
+
+/* 관리자 조회 영역 */
+#adminArea {
+    margin-top: 20px;
+    display: none;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #b2dfbd;
+}
+
+#adminArea h3 {
+    margin-top: 0;
+    color: #2e7d32;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1 id="title">Sorim Acupuncture & Healing Art Ltd</h1>
+    <h2 style="text-align:center;color:#2e7d32;">경과 업데이트</h2>
+
+    <p style="text-align:center; color:#2e7d32;">
+        안녕하세요 😊<br>
+        지난 치료 이후 변화가 있으셨다면 편하게 적어주세요.<br>
+        초진이신 경우, 오늘 진료받고 싶으신 내용을 적어주시면 됩니다.
+    </p>
+
+    <label>성함</label>
+    <input type="text" id="name" placeholder="예: 김소림">
+
+    <label>지난 치료 이후 경과</label>
+    <textarea id="progress" rows="3" placeholder="예: 왼쪽 어깨 통증이 50% 정도 호전되었습니다."></textarea>
+
+    <label>초진인 경우 원하는 진료 내용</label>
+    <textarea id="firstVisit" rows="3" placeholder="예: 어깨 통증 치료를 원합니다. / 두통이 자주 있습니다."></textarea>
+
+    <button onclick="submitForm()">경과 제출</button>
+
+    <p id="message"></p>
+
+    <!-- 관리자 조회 영역 (비밀) -->
+    <div id="adminArea">
+        <h3>경과 기록</h3>
+        <div id="logContent"></div>
+        <button onclick="clearLogs()" style="background:#e53935;">기록 삭제</button>
+    </div>
+</div>
+
+<script>
+let clickCount = 0;
+const ADMIN_PASSWORD = "hailey2026!";
+
+// 제목 5번 클릭 → 관리자 조회 활성화
+document.getElementById("title").addEventListener("click", function() {
+    clickCount++;
+    if (clickCount >= 5) {
+        const pass = prompt("관리자 비밀번호를 입력하세요");
+        if (pass === ADMIN_PASSWORD) {
+            document.getElementById("adminArea").style.display = "block";
+            loadLogs();
+        } else {
+            alert("비밀번호가 틀렸습니다.");
+        }
+        clickCount = 0;
+    }
+});
+
+// 경과 제출
+function submitForm() {
+    const name = document.getElementById("name").value.trim();
+    const progress = document.getElementById("progress").value.trim();
+    const firstVisit = document.getElementById("firstVisit").value.trim();
+
+    if (!name) {
+        alert("성함을 입력해주세요.");
+        return;
+    }
+
+    if (!progress && !firstVisit) {
+        alert("경과 내용 또는 원하는 진료 내용을 하나 이상 작성해주세요.");
+        return;
+    }
+
+    const data = {
+        name: name,
+        progress: progress,
+        firstVisit: firstVisit,
+        time: new Date().toLocaleString()
+    };
+
+    // localStorage 저장
+    let logs = localStorage.getItem("progressLogs") || "";
+    logs += `<p><strong>${data.time}</strong><br>
+            이름: ${data.name}<br>
+            경과: ${data.progress || "해당 없음"}<br>
+            희망 진료: ${data.firstVisit || "해당 없음"}</p><hr>`;
+    localStorage.setItem("progressLogs", logs);
+
+    document.getElementById("message").innerText = "경과가 제출되었습니다 💚 감사합니다!";
+    document.getElementById("name").value = "";
+    document.getElementById("progress").value = "";
+    document.getElementById("firstVisit").value = "";
+}
+
+// 관리자 조회
+function loadLogs() {
+    const saved = localStorage.getItem("progressLogs");
+    document.getElementById("logContent").innerHTML = saved || "<p>기록 없음</p>";
+}
+
+// 기록 삭제
+function clearLogs() {
+    if (confirm("정말 모든 기록을 삭제하시겠습니까?")) {
+        localStorage.removeItem("progressLogs");
+        document.getElementById("logContent").innerHTML = "<p>기록 삭제됨</p>";
+    }
+}
+</script>
+
+</body>
+</html>
